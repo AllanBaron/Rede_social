@@ -299,7 +299,7 @@ bool fazer_login(ListaUsuarios *listaUsuarios, Usuario *&usuarioAtivo) {
 }
 
 void Fazer_postagem(ListaUsuarios *listaUsuarios, ListaPosts *listaPosts, Usuario *usuarioAtivo, string textoEsquerda, string textoDireita) {
-	string texto, citarUsuario, usuarioCitado, mensagemErro;
+	string texto, textoTemp, citarUsuario, usuarioCitado, mensagemErro;
 	Usuario *usuarioTemp = NULL;
 
 	limparTela();
@@ -308,6 +308,9 @@ void Fazer_postagem(ListaUsuarios *listaUsuarios, ListaPosts *listaPosts, Usuari
 	cout << "Digite abaixo:" << endl;
 	clearCin();
 	cin >> texto;
+	getline(cin, textoTemp);
+
+	texto += textoTemp;
 
 	if (fazer_pergunta("\n\nCitar outro usu\xA0rio?", "", false)) {
 		while (true) {
