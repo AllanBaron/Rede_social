@@ -46,14 +46,19 @@ struct ListaPosts {
 				bool status = listaUsuarios->buscarUsuarioPorID(atual->post->usuarioID, usuarioTemp);
 				
 				if (status) {
-					cout << usuarioTemp->nome << "\n" << endl;
-					cout << quabraLinhaTexto(atual->post->texto, larguraDoTerminal()-10) << "\n" << endl;
-					preencherLinhaComCaractere('\x5F');
-					cout << "\n";
+					if (this->size() > 0) {
+						cout << usuarioTemp->nome << "\n" << endl;
+						cout << quabraLinhaTexto(atual->post->texto, larguraDoTerminal() - 10) << "\n" << endl;
+						preencherLinhaComCaractere('\x5F');
+						cout << "\n";
+					}
 				}
 				
 				atual = atual->proximoPost;
 			}
+		}
+		else {
+			cout << alinharTextoCentro("Nenhuma postagem encontrada!");
 		}
 	}
 
