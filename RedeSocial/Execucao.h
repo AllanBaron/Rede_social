@@ -60,7 +60,7 @@ void fazer_cadastro(ListaUsuarios *listaUsuarios) {
 	listaUsuarios->inserir(new ElementoUsuario(new Usuario(usuarioID, nome, sobrenome, email, senha, dataNascDia, dataNascMes, dataNascAno, sexo)));
 }
 
-bool fazer_login(ListaUsuarios *listaUsuarios, Usuario *usuarioAtivo) {
+bool fazer_login(ListaUsuarios *listaUsuarios, Usuario *&usuarioAtivo) {
 	string email = "", senha = "", mensagemErro;
 	bool statusEmail = false, statusSenha = false;
 	Usuario *usuarioTemp = NULL;
@@ -102,6 +102,7 @@ bool fazer_login(ListaUsuarios *listaUsuarios, Usuario *usuarioAtivo) {
 
 			if (usuarioTemp != NULL && usuarioTemp->senha == senha) {
 				statusSenha = true;
+				usuarioAtivo = usuarioTemp;
 			}
 			else {
 				mensagemErro = "Senha incorreta";
