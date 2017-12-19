@@ -115,8 +115,22 @@ bool fazer_login(ListaUsuarios *listaUsuarios, Usuario *usuarioAtivo) {
 	return statusSenha;
 }
 
-void Fazer_postagem(ListaUsuarios *listaUsuarios, ListaPosts *listaPosts) {
+void Fazer_postagem(ListaUsuarios *listaUsuarios, ListaPosts *listaPosts, Usuario *usuarioAtivo, string textoEsquerda, string textoDireita) {
+	string texto;
 
+	system("cls");
+	renderiza_rodape();
+	renderiza_rodape_logado(textoEsquerda, textoDireita);
+
+	cout << "Digite abaixo:" << endl;
+	clearCin();
+	cin >> texto;
+
+	if (texto.length() > 0) {
+		cout << texto;
+		listaPosts->inserir(new ElementoPost(new Post(listaPosts->size(), usuarioAtivo->ID, texto)));
+	}
+	
 }
 
 void executa_menu_logado(int menuSelecionado, string menuTexto[], string textoEsquerda, string textoDireita) {
@@ -198,7 +212,7 @@ void executa_rede_social(ListaUsuarios *listaUsuarios, ListaPosts *listaPosts, U
 			menuSelecionado = menu(listaUsuarios, usuarioAtivo);
 
 			if (menuSelecionado == 1) {
-
+				Fazer_postagem(listaUsuarios, listaPosts, usuarioAtivo, textoDireita, textoEsquerda);
 			}
 			else if (menuSelecionado == 2) {
 				textoDireita = "Deslogando...    ";
