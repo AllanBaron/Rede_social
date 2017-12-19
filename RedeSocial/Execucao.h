@@ -304,8 +304,7 @@ void Fazer_postagem(ListaUsuarios *listaUsuarios, ListaPosts *listaPosts, Usuari
 
 	limparTela();
 	renderiza_rodape_logado(textoEsquerda, textoDireita);
-
-	cout << "Digite abaixo:" << endl;
+	cout << "Texto deve conter no m\xA0ximo 280 caracteres:" << endl;
 	clearCin();
 	cin >> texto;
 	getline(cin, textoTemp);
@@ -348,14 +347,12 @@ void Fazer_postagem(ListaUsuarios *listaUsuarios, ListaPosts *listaPosts, Usuari
 				break;
 			}
 
-			mensagemErro = "\n\nUsu\xA0rio n\xC6o exite!\n";
-
-			
+			mensagemErro = "\n\nUsu\xA0rio n\xC6o exite!\n";			
 		}
 		
 	}
 	
-	if (texto.length() > 0) {
+	if (texto.length() > 1 && texto.length() <= 280) {
 		cout << texto;
 		listaPosts->inserir(new ElementoPost(new Post(listaPosts->size(), usuarioAtivo->ID, texto, usuarioCitado)));
 	}
