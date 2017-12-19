@@ -1,5 +1,0 @@
-﻿  RedeSocial.cpp
-c:\users\allan baron\documents\trabalho\redesocial\redesocial\ferramentas.h(97): warning C4267: 'return': conversão de 'size_t' para 'int', possível perda de dados
-c:\users\allan baron\documents\trabalho\redesocial\redesocial\ferramentas.h(101): warning C4267: 'return': conversão de 'size_t' para 'int', possível perda de dados
-c:\users\allan baron\documents\trabalho\redesocial\redesocial\interface.h(105): warning C4715: 'fazer_pergunta': nem todos os caminhos de controle retornam um valor
-  RedeSocial.vcxproj -> C:\Users\Allan Baron\Documents\Trabalho\RedeSocial\x64\Debug\RedeSocial.exe
