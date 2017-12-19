@@ -4,7 +4,7 @@
 
 #include <windows.h>
 #include <string>
-const int COR_PADRAO = 7, COR_VERDE_ESCURO = 2, COR_CINZA = 8, COR_VERDE_CLARO = 10;;
+const int COR_PADRAO = 7, COR_VERDE_ESCURO = 2, COR_CINZA = 8, COR_VERDE_CLARO = 10, COR_VERMELHO = 12;
 
 using namespace std;
 
@@ -17,6 +17,10 @@ void MaximizetWindow() {
 void RestoreWindow() {
 	HWND consoleWindow = GetConsoleWindow();
 	ShowWindow(consoleWindow, SW_RESTORE);
+}
+
+void limparTela() {
+	system("cls");
 }
 
 void clearCin() {
@@ -67,8 +71,7 @@ string quabraLinhaTexto(string texto, int delimitador) {
 	return texto;
 }
 
-COORD posicaoDeInsercaoNoConsole()
-{
+COORD posicaoDeInsercaoNoConsole() {
 	CONSOLE_SCREEN_BUFFER_INFO consoleBuffer;
 	if (GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &consoleBuffer))
 	{
@@ -80,8 +83,7 @@ COORD posicaoDeInsercaoNoConsole()
 	}
 }
 
-int larguraDoTerminal()
-{
+int larguraDoTerminal() {
 	CONSOLE_SCREEN_BUFFER_INFO consoleBuffer;
 	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &consoleBuffer);
 
@@ -101,13 +103,11 @@ int quantidadeParaAlinharDireita(string texto) {
 	return (larguraDoTerminal() - posicaoDeInsercaoNoConsole().X - texto.size());
 }
 
-void preencherLinhaComCaractere(char caractere)
-{
+void preencherLinhaComCaractere(char caractere) {
 	cout << string(larguraDoTerminal()+1, caractere) << endl;
 }
 
-void preencherQuantidadeDeCaracteres(char caractere, int quantidade)
-{
+void preencherQuantidadeDeCaracteres(char caractere, int quantidade) {
 	cout << string(quantidade, caractere);
 }
 

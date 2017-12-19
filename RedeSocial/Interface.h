@@ -12,7 +12,7 @@ using namespace std;
 void loading() {
 	string tamanhoTexto, antesCode = "\xB1", dapois = "\xDB";
 
-	system("cls");
+	limparTela();
 	alterarCorTexto(COR_PADRAO);
 	
 	cout << "\n\n\n";
@@ -47,8 +47,8 @@ void loading() {
 	alterarCorTexto(COR_PADRAO);
 }
 
-void renderiza_rodape() {
-	system("cls");
+void renderiza_rodape(int quebrarLinha) {
+	limparTela();
 
 	preencherLinhaComCaractere('\xDF');
 
@@ -57,6 +57,10 @@ void renderiza_rodape() {
 	cout << "\n";
 	redefinirCorTexto();
 	preencherLinhaComCaractere('\xDC');
+
+	for (int i = 0; i < quebrarLinha; i++) {
+		cout << "\n";
+	}
 	
 }
 
@@ -75,12 +79,12 @@ void renderiza_rodape_logado(string textoEsquerda, string textoDireita) {
 }
 
 bool fazer_pergunta(string pergunta, string menssagemErro, bool limparTela) {
-
 	string resporta;
 
 	do {
 		if (limparTela) {
 			system("cls");
+			renderiza_rodape(1);
 		}
 
 		if (menssagemErro.size()) {
@@ -90,7 +94,8 @@ bool fazer_pergunta(string pergunta, string menssagemErro, bool limparTela) {
 		cout << pergunta << " Sim / N\xC6o" << endl;
 		cin >> resporta;
 
-		menssagemErro = "Valor invalido!";
+		menssagemErro = "Valor invalido!\n";
+		limparTela = true;
 	}
 	while(resporta != "Sim" && resporta != "sim" && resporta != "S" && resporta != "s" && resporta != "N\xC6o" && resporta != "n\xC6o" && resporta != "N" && resporta != "n");
 

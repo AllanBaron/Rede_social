@@ -11,18 +11,18 @@ struct Usuario {
 	int ID;
 	string nome;
 	string sobrenome;
-	string email;
+	string usuarioLogin;
 	string senha;
 	int dataNascDia;
 	int dataNascMes;
 	int dataNascAno;
 	string sexo;
 
-	Usuario(int ID, string nome, string sobrenome, string email, string senha, int dataNascDia, int dataNascMes, int dataNascAno, string sexo) {
+	Usuario(int ID, string nome, string sobrenome, string usuarioLogin, string senha, int dataNascDia, int dataNascMes, int dataNascAno, string sexo) {
 		this->ID = ID;
 		this->nome = nome;
 		this->sobrenome = sobrenome;
-		this->email = email;
+		this->usuarioLogin = usuarioLogin;
 		this->senha = senha;
 		this->dataNascDia = dataNascDia;
 		this->dataNascMes = dataNascMes;
@@ -67,7 +67,7 @@ struct ListaUsuarios {
 		return false;
 	}
 
-	bool buscarUsuarioPorEmail(string email, Usuario *&usuario) {
+	bool buscarUsuario(string usuarioLogin, Usuario *&usuario) {
 		if (this->primeiro == NULL) {
 			return false;
 		}
@@ -75,7 +75,7 @@ struct ListaUsuarios {
 		ElementoUsuario *atual = this->primeiro;
 
 		while (atual != NULL) {	
-			if (atual->usuario->email == email) {
+			if (atual->usuario->usuarioLogin == usuarioLogin) {
 				usuario = atual->usuario;
 				return true;
 			}
@@ -96,6 +96,18 @@ struct ListaUsuarios {
 				atual = atual->proximoUsuario;
 			}
 		}
+	}
+
+	bool inserirNoComeco(ElementoUsuario *novoElemento) {
+		if (this->primeiro == NULL) {
+			this->primeiro = novoElemento;
+			return true;
+		}
+
+		ElementoUsuario *atual = this->primeiro;
+		this->primeiro = novoElemento;
+		this->primeiro->proximoUsuario = atual;
+		return true;
 	}
 
 	bool inserir(ElementoUsuario *novoElemento) {

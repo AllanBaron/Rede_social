@@ -11,89 +11,271 @@
 
 using namespace std;
 
+string valida_usuario(ListaUsuarios *listaUsuarios) {
+	string usuarioLogin, mensagemErro;
+	Usuario *usuarioTemp = NULL;
+
+	while (true) {
+		limparTela();
+		renderiza_rodape(1);
+
+		if (mensagemErro.length()) {
+			alterarCorTexto(COR_VERMELHO);
+			cout << mensagemErro << endl;
+			redefinirCorTexto();
+		}
+		cout << "Usu\xA0rio: @";
+		cin >> usuarioLogin;
+
+		if (!listaUsuarios->buscarUsuario(usuarioLogin, usuarioTemp)) {
+			break;
+		}
+		mensagemErro = "Usu\xA0rio j\xA0 exite!\n";
+	}
+
+	return usuarioLogin;
+
+}
+
+string valida_senha() {
+	string senha, senhaAutenticacao, mensagemErro;
+	while (true) {
+		limparTela();
+		renderiza_rodape(1);
+
+		if (mensagemErro.length()) {
+			alterarCorTexto(COR_VERMELHO);
+			cout << mensagemErro << endl;
+			redefinirCorTexto();
+		}
+
+		cout << "Senha: ";
+		cin >> senha;
+
+		cout << "Repita a senha novamente: ";
+		cin >> senhaAutenticacao;
+
+		if (senha == senhaAutenticacao) {
+			break;
+		}
+
+		mensagemErro = "As senhas n\xC6o s\xC6o iguais!\n";
+	}
+
+	return senha;
+}
+
+int valida_dia() {
+	int dia;
+	string mensagemErro;
+
+	while (true) {
+		limparTela();
+		renderiza_rodape(1);
+
+		if (mensagemErro.length()) {
+			alterarCorTexto(COR_VERMELHO);
+			cout << mensagemErro << endl;
+			redefinirCorTexto();
+		}
+
+		cout << "Data de nascimento" << endl;
+		cout << "Digite o dia" << endl;
+		cin >> dia;
+
+		if (dia > 0 && dia <= 31) {
+			break;
+		}
+
+		mensagemErro = "Dia invalido!\n";
+	}
+
+	return dia;
+}
+
+int valida_mes(int dia) {
+	int mes;
+	string mensagemErro;
+
+	while (true) {
+		limparTela();
+		renderiza_rodape(1);
+
+		if (mensagemErro.length()) {
+			alterarCorTexto(COR_VERMELHO);
+			cout << mensagemErro << endl;
+			redefinirCorTexto();
+		}
+
+		cout << "Data de nascimento" << endl;
+		cout << "Digite o m\x88s" << endl;		
+		printf("%02d/", dia);
+		cin >> mes;
+
+		if (mes > 0 && mes <= 12) {
+			break;
+		}
+
+		mensagemErro = "M\x88s invalido!\n";
+	}
+
+	return mes;
+}
+
+int valida_ano(int dia, int mes) {
+	int ano;
+	string mensagemErro;
+
+	while (true) {
+		system("cls");
+		renderiza_rodape(1);
+
+		if (mensagemErro.length()) {
+			alterarCorTexto(COR_VERMELHO);
+			cout << mensagemErro << endl;
+			redefinirCorTexto();
+		}
+
+		cout << "Data de nascimento" << endl;
+		cout << "Digite a ano" << endl;
+		printf("%02d/%02d/", dia, mes);
+		cin >> ano;
+
+		if (ano > 1900 && ano <= 1999) {
+			break;
+		}
+		else if (ano > 2017) {
+			mensagemErro = "Ops, Voc\x88 ainda n\xC6o nasceu!\n";
+		}
+		else if (ano > 1999) {
+			mensagemErro = "Voc\x88 tende ter mais de 18 anos!\n";
+		}
+		else {
+			mensagemErro = "Ano invalido!\n";
+		}
+
+		
+	}
+
+	return ano;
+}
+
+string valida_sexo() {
+	int escolhar;
+	string sexo, mensagemErro;
+
+	while (true) {
+		limparTela();
+		renderiza_rodape(1);
+
+		if (mensagemErro.length()) {
+			alterarCorTexto(COR_VERMELHO);
+			cout << mensagemErro << endl;
+			redefinirCorTexto();
+		}
+
+		cout << "Sexo" << endl;
+		cout << "1 - Masculino" << endl;
+		cout << "2 - Feminino\n" << endl;
+		
+		cout << "Escolha: ";
+		cin >> escolhar;
+
+		if (escolhar == 1) {
+			sexo = "Masculino";
+			break;
+		}
+		else if(escolhar == 2) {
+			sexo = "Feminino";
+			break;
+		}
+
+		mensagemErro = "Valor invalido!\n";
+	}
+
+	return sexo;
+}
+
 void fazer_cadastro(ListaUsuarios *listaUsuarios) {
 	int usuarioID = listaUsuarios->size();
-	cout << usuarioID << endl;
+	Usuario *usuarioTemp = NULL;
 
 	string nome;
 	string sobrenome;
-	string email;
+	string usuarioLogin;
 	string senha;
 	int dataNascDia;
 	int dataNascMes;
 	int dataNascAno;
 	string sexo;
 
-	system("cls");
+	limparTela();
+	renderiza_rodape(1);
 	cout << "Nome: ";
 	cin >> nome;
 
-	system("cls");
+	limparTela();
+	renderiza_rodape(1);
 	cout << "Sobrenome: ";
 	cin >> sobrenome;
 
-	system("cls");
-	cout << "E-mail:";
-	cin >> email;
+	usuarioLogin = valida_usuario(listaUsuarios);
+	
+	senha = valida_senha();
 
-	system("cls");
-	cout << "Senha:";
-	cin >> senha;
+	dataNascDia = valida_dia();
+	dataNascMes = valida_mes(dataNascDia);
+	dataNascAno = valida_ano(dataNascDia, dataNascMes);
+	Sleep(800);
 
-	system("cls");
-	cout << "Nascimento" << endl;
-	cout << "Digite a dia" << endl;
-	cin >> dataNascDia;
+	sexo = valida_sexo();
 
-	system("cls");
-	cout << "Nascimento" << endl;
-	cout << "Digite a m\x88s" << endl;
-	printf("%02d/", dataNascDia);
-	cin >> dataNascMes;
-
-	system("cls");
-	cout << "Nascimento" << endl;
-	cout << "Digite a ano" << endl;
-	printf("%02d/%02d/", dataNascDia, dataNascMes);
-	cin >> dataNascAno;
-
-	listaUsuarios->inserir(new ElementoUsuario(new Usuario(usuarioID, nome, sobrenome, email, senha, dataNascDia, dataNascMes, dataNascAno, sexo)));
+	listaUsuarios->inserir(new ElementoUsuario(new Usuario(usuarioID, nome, sobrenome, usuarioLogin, senha, dataNascDia, dataNascMes, dataNascAno, sexo)));
 }
 
 bool fazer_login(ListaUsuarios *listaUsuarios, Usuario *&usuarioAtivo) {
-	string email = "", senha = "", mensagemErro;
+	string usuarioLogin = "", senha = "", mensagemErro;
 	bool statusEmail = false, statusSenha = false;
 	Usuario *usuarioTemp = NULL;
 
 	while (!statusSenha) {
-		system("cls");
+		limparTela();
+		renderiza_rodape(1);
 
 		if (mensagemErro.length()) {
+			
+			alterarCorTexto(COR_VERMELHO);
 			cout << mensagemErro << endl;
+			redefinirCorTexto();
+
 			if (!statusEmail) {
-				if (!fazer_pergunta("E-mail n\xC6o cadastrado\nTentar outro email?", "", true)) {
+				if (!fazer_pergunta("Tentar outro email?", "", false)) {
 					break;
 				}
+
+				limparTela();
+				renderiza_rodape(1);
 			}
 			else {
 				if (!statusSenha) {
-					if (fazer_pergunta("<- Voltar", "", true)) {
-						statusEmail = false;
-					}
-					if (!fazer_pergunta("Tentar outro email?", "", false)) {
+					if (!fazer_pergunta("Tentar novamente?", "", false)) {
 						break;
 					}
-				}
-			}
 
-			system("cls");
+					limparTela();
+					renderiza_rodape(1);
+
+					cout << "Usu\xA0rio: @";
+					cout << usuarioLogin << "\n";
+				}
+			}			
 		}
 
 		if (!statusEmail) {
-			cout << "E-mail: ";
-			cin >> email;
+			cout << "Usu\xA0rio: @";
+			cin >> usuarioLogin;
 
-			statusEmail = listaUsuarios->buscarUsuarioPorEmail(email, usuarioTemp);
+			statusEmail = listaUsuarios->buscarUsuario(usuarioLogin, usuarioTemp);
 		}
 
 		if (statusEmail) {
@@ -105,11 +287,11 @@ bool fazer_login(ListaUsuarios *listaUsuarios, Usuario *&usuarioAtivo) {
 				usuarioAtivo = usuarioTemp;
 			}
 			else {
-				mensagemErro = "Senha incorreta";
+				mensagemErro = "Senha incorreta\n";
 			}
 		}
 		else {
-			mensagemErro = "E-mail n\xC6o cadastrado";
+			mensagemErro = "E-mail n\xC6o cadastrado\n";
 		}
 	}
 
@@ -119,8 +301,7 @@ bool fazer_login(ListaUsuarios *listaUsuarios, Usuario *&usuarioAtivo) {
 void Fazer_postagem(ListaUsuarios *listaUsuarios, ListaPosts *listaPosts, Usuario *usuarioAtivo, string textoEsquerda, string textoDireita) {
 	string texto;
 
-	system("cls");
-	renderiza_rodape();
+	limparTela();
 	renderiza_rodape_logado(textoEsquerda, textoDireita);
 
 	cout << "Digite abaixo:" << endl;
@@ -135,7 +316,7 @@ void Fazer_postagem(ListaUsuarios *listaUsuarios, ListaPosts *listaPosts, Usuari
 }
 
 void executa_menu_logado(int menuSelecionado, string menuTexto[], string textoEsquerda, string textoDireita) {
-	renderiza_rodape();
+	limparTela();
 	renderiza_rodape_logado(textoEsquerda, textoDireita);
 	renderiza_menu(menuSelecionado, menuTexto, 2, 0);
 }
@@ -147,13 +328,12 @@ int menu(ListaUsuarios *listaUsuarios, Usuario *usuarioAtivo) {
 
 	// Mensagens
 	string textoDireita = "ESC para ver os Posts  ";
-	string textoEsquerda = "  Bem vindo, " + usuarioAtivo->nome + "!";
+	string textoEsquerda = "  Bem vindo, " + usuarioAtivo->nome + " " +  usuarioAtivo->sobrenome + "!";
 
-	system("cls");
+	limparTela();
 	executa_menu_logado(menuSelecionado, menuTexto, textoEsquerda, textoDireita);
 
 	while (true) {
-	
 		if (GetAsyncKeyState(VK_ESCAPE) & 0x8000) {
 			return 0;
 		}
@@ -198,12 +378,9 @@ void executa_rede_social(ListaUsuarios *listaUsuarios, ListaPosts *listaPosts, U
 
 	// Mensagens 
 	string textoDireita = "ESC para acessar o MENU  ";
-	string textoEsquerda = "  Bem vindo, " + usuarioAtivo->nome + "!";
+	string textoEsquerda = "  Bem vindo, " + usuarioAtivo->nome + " " + usuarioAtivo->sobrenome + "!";
 
-	system("cls");
-	listaPosts->mostrarTodosPosts(listaUsuarios);
-
-	renderiza_rodape();
+	limparTela();
 	renderiza_rodape_logado(textoEsquerda, textoDireita);
 	listaPosts->mostrarTodosPosts(listaUsuarios);
 	irParaTop(0, 0);
@@ -213,21 +390,20 @@ void executa_rede_social(ListaUsuarios *listaUsuarios, ListaPosts *listaPosts, U
 			menuSelecionado = menu(listaUsuarios, usuarioAtivo);
 
 			if (menuSelecionado == 1) {
-				Fazer_postagem(listaUsuarios, listaPosts, usuarioAtivo, textoDireita, textoEsquerda);
+				Fazer_postagem(listaUsuarios, listaPosts, usuarioAtivo, textoEsquerda, textoDireita);
 			}
 			else if (menuSelecionado == 2) {
 				textoDireita = "Deslogando...    ";
-				textoEsquerda = "  At\x82 outra hora " + usuarioAtivo->nome + "!";
+				textoEsquerda = "  At\x82 outra hora " + usuarioAtivo->nome + " " + usuarioAtivo->sobrenome + "!";
 
-				system("cls");
-				renderiza_rodape();
+				limparTela();
 				renderiza_rodape_logado(textoEsquerda, textoDireita);
 				Sleep(1800);
 
 				break;
 			}
 
-			renderiza_rodape();
+			limparTela();
 			renderiza_rodape_logado(textoEsquerda, textoDireita);
 			listaPosts->mostrarTodosPosts(listaUsuarios);
 			irParaTop(0, 0);
@@ -241,7 +417,7 @@ void executa_rede_social(ListaUsuarios *listaUsuarios, ListaPosts *listaPosts, U
 
 }
 
-void menu_deslogado_tecla_enter(int menuSelecionado, ListaUsuarios *listaUsuarios, ListaPosts *listaPosts, Usuario *usuarioAtivo) {
+void menu_deslogado_tecla_enter(int menuSelecionado, ListaUsuarios *listaUsuarios, ListaPosts *listaPosts, Usuario *usuarioAtivo, bool &dadosPreCarregados) {
 	switch (menuSelecionado) {
 		case 1:
 			clearCin();
@@ -254,9 +430,9 @@ void menu_deslogado_tecla_enter(int menuSelecionado, ListaUsuarios *listaUsuario
 			fazer_cadastro(listaUsuarios);
 			break;
 		case 3:
-			if (listaPosts->size() == 0) {
+			if (!dadosPreCarregados) {
 				inicia_dados_pre_carregados(listaUsuarios, listaPosts);
-
+				dadosPreCarregados = true;
 				loading();
 			}
 			
@@ -268,12 +444,13 @@ void menu_deslogado_tecla_enter(int menuSelecionado, ListaUsuarios *listaUsuario
 }
 
 void executa_menu_deslogado(int menuSelecionado, string menuTexto[]) {
-	renderiza_rodape();
+	renderiza_rodape(0);
 	renderiza_menu(menuSelecionado, menuTexto, 4, 2);
 }
 
 void inicializa() {
 	// Variaveis
+	bool dadosPreCarregados = false;
 	Usuario *usuarioAtivo = NULL;
 
 	// Menu
@@ -292,7 +469,7 @@ void inicializa() {
 				break;
 			}
 
-			menu_deslogado_tecla_enter(menuSelecionado, listaUsuarios, listaPosts, usuarioAtivo);
+			menu_deslogado_tecla_enter(menuSelecionado, listaUsuarios, listaPosts, usuarioAtivo, dadosPreCarregados);
 
 			executa_menu_deslogado(menuSelecionado, menuTexto);
 		}
