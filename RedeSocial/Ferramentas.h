@@ -4,7 +4,7 @@
 
 #include <windows.h>
 #include <string>
-const int COR_PADRAO = 7, COR_VERDE_ESCURO = 2, COR_CINZA = 8, COR_VERDE_CLARO = 10, COR_VERMELHO = 12;
+const int COR_PADRAO = 7, COR_VERDE_ESCURO = 2, COR_CINZA = 8, COR_BRANCO = 15, COR_VERDE_CLARO = 10, COR_VERMELHO = 12, COR_AZUL_CLARO = 11;
 
 using namespace std;
 

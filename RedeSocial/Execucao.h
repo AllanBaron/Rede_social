@@ -299,7 +299,8 @@ bool fazer_login(ListaUsuarios *listaUsuarios, Usuario *&usuarioAtivo) {
 }
 
 void Fazer_postagem(ListaUsuarios *listaUsuarios, ListaPosts *listaPosts, Usuario *usuarioAtivo, string textoEsquerda, string textoDireita) {
-	string texto;
+	string texto, citarUsuario, usuarioCitado, mensagemErro;
+	Usuario *usuarioTemp = NULL;
 
 	limparTela();
 	renderiza_rodape_logado(textoEsquerda, textoDireita);
@@ -308,9 +309,52 @@ void Fazer_postagem(ListaUsuarios *listaUsuarios, ListaPosts *listaPosts, Usuari
 	clearCin();
 	cin >> texto;
 
+	if (fazer_pergunta("\n\nCitar outro usu\xA0rio?", "", false)) {
+		while (true) {
+			if (mensagemErro.length()) {
+				limparTela();
+				renderiza_rodape_logado(textoEsquerda, textoDireita);
+
+				cout << "Texto:" << endl;
+				cout << texto;
+
+				alterarCorTexto(COR_VERMELHO);
+				cout << mensagemErro << endl;
+				redefinirCorTexto();
+
+				if (fazer_pergunta("\nCancelar?", "", false)) {
+					break;
+				}
+
+				limparTela();
+				renderiza_rodape_logado(textoEsquerda, textoDireita);
+
+				cout << "Digite abaixo:" << endl;
+				cout << texto;
+
+				alterarCorTexto(COR_VERMELHO);
+				cout << mensagemErro << endl;
+				redefinirCorTexto();
+			}
+
+			cout << "Usu\xA0rio: @";
+			cin >> citarUsuario;
+
+			if (listaUsuarios->buscarUsuario(citarUsuario, usuarioTemp)){
+				usuarioCitado = usuarioTemp->nome;
+				break;
+			}
+
+			mensagemErro = "\n\nUsu\xA0rio n\xC6o exite!\n";
+
+			
+		}
+		
+	}
+	
 	if (texto.length() > 0) {
 		cout << texto;
-		listaPosts->inserir(new ElementoPost(new Post(listaPosts->size(), usuarioAtivo->ID, texto)));
+		listaPosts->inserir(new ElementoPost(new Post(listaPosts->size(), usuarioAtivo->ID, texto, usuarioCitado)));
 	}
 	
 }
@@ -471,6 +515,7 @@ void inicializa() {
 
 			menu_deslogado_tecla_enter(menuSelecionado, listaUsuarios, listaPosts, usuarioAtivo, dadosPreCarregados);
 
+			menuSelecionado = 1;
 			executa_menu_deslogado(menuSelecionado, menuTexto);
 		}
 		else if (GetAsyncKeyState(VK_UP) & 0x8000) {

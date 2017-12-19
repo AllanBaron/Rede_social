@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include "Ferramentas.h"
+#include "Interface.h";
 
 using namespace std;
 
@@ -12,11 +13,14 @@ struct Post {
 	int ID;
 	int usuarioID;
 	string texto;
+	string usuarioIdCitado;
 
-	Post(int ID, int usuarioID, string texto) {
+	Post(int ID, int usuarioID, string texto, string usuarioIdCitado = "") {
 		this->ID = ID;
 		this->usuarioID = usuarioID;
 		this->texto = texto;
+
+		this->usuarioIdCitado = usuarioIdCitado;
 	}
 };
 
@@ -47,8 +51,18 @@ struct ListaPosts {
 				
 				if (status) {
 					if (this->size() > 0) {
-						cout << usuarioTemp->nome << "\n" << endl;
-						cout << quabraLinhaTexto(atual->post->texto, larguraDoTerminal() - 10) << "\n" << endl;
+						alterarCorTexto(COR_AZUL_CLARO);
+						cout << "@" << usuarioTemp->usuarioLogin << "\n" << endl;
+						
+						redefinirCorTexto();
+						cout << quabraLinhaTexto(atual->post->texto, larguraDoTerminal() - 10);
+					
+						alterarCorTexto(COR_BRANCO);
+						if (atual->post->usuarioIdCitado.length()) {
+							cout << "\n\nUsu\xA0rio citado: @" << atual->post->usuarioIdCitado;
+						}
+						cout << "\n" << endl;
+						redefinirCorTexto();
 						preencherLinhaComCaractere('\x5F');
 						cout << "\n";
 					}
